@@ -1,0 +1,11 @@
+spring:
+  flyway:
+    table: cash_schema_version
+    locations: classpath:db.migration
+    baseline-on-migrate: true
+    enabled: true
+
+---
+
+spring:
+  profiles: local

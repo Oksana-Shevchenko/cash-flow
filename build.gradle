@@ -1,0 +1,126 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.4.RELEASE'
+    }
+    repositories {
+        jcenter()
+    }
+
+    dependencies{
+        classpath('io.spring.gradle:dependency-management-plugin:0.5.3.RELEASE')
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+subprojects {
+    repositories {
+        jcenter()
+    }
+
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+
+    dependencyManagement {
+        imports {
+            mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
+        }
+    }
+}
+
+//buildscript {git
+//	ext {
+//        springBootVersion = '1.5.16.BUILD-SNAPSHOT'
+////        spring-boot-version = '2.0.4.RELEASE'
+//	}
+//	repositories {
+//        mavenCentral()
+//        jcenter()
+//		maven { url "https://repo.spring.io/snapshot" }
+//		maven { url "https://repo.spring.io/milestone" }
+//	}
+//	dependencies {
+//		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+//	}
+//}
+//
+//apply plugin: 'java'
+////apply plugin: 'eclipse'
+//apply plugin: 'org.springframework.boot'
+////
+//group = 'com.cash'
+//version = '0.0.1-SNAPSHOT'
+////sourceCompatibility = 1.8
+//
+////repositories {
+////	mavenCentral()
+////	maven { url "https://repo.spring.io/snapshot" }
+////	maven { url "https://repo.spring.io/milestone" }
+////}
+//
+//
+////dependencies {
+////	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+////	compile('org.springframework.boot:spring-boot-starter-web')
+////	compile('org.flywaydb:flyway-core')
+////	runtime('org.springframework.boot:spring-boot-devtools')
+////	runtime('mysql:mysql-connector-java')
+////	compileOnly('org.projectlombok:lombok')
+////	testCompile('org.springframework.boot:spring-boot-starter-test')
+////}
+////
+//
+//subprojects {
+//	version = '1.0'
+////    apply plugin: 'org.springframework.boot'
+//    apply plugin: 'java'
+////    apply plugin: 'io.spring.dependency-management'
+//
+//    repositories {
+//        mavenCentral()
+//        jcenter()
+//        maven { url "https://repo.spring.io/snapshot" }
+//        maven { url "https://repo.spring.io/milestone" }
+//    }
+//
+////
+////    dependencies {
+////        compile "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
+////        compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+////        runtime "org.springframework.boot:spring-boot-devtools:$springBootVersion"
+////        testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+////        compile project(':common'), project(':web-api')
+////    }
+////    dependencies {
+////	    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+////	    compile('org.springframework.boot:spring-boot-starter-web')
+////	    compile('org.flywaydb:flyway-core')
+////	    runtime('org.springframework.boot:spring-boot-devtools')
+////	    runtime('mysql:mysql-connector-java')
+////	    compileOnly('org.projectlombok:lombok')
+////	    testCompile('org.springframework.boot:spring-boot-starter-test')
+////    }
+//}
+//
+//project(':common') {
+//    dependencies {
+////        compile('org.springframework.boot:spring-boot-starter-data-jpa')
+////        compile('org.springframework.boot:spring-boot-starter-web')
+//        compile('org.flywaydb:flyway-core')
+//        runtime('org.springframework.boot:spring-boot-devtools')
+//        runtime('mysql:mysql-connector-java')
+//        compileOnly('org.projectlombok:lombok')
+//        testCompile('org.springframework.boot:spring-boot-starter-test')
+//    }
+//}
+//project(':web-api') {
+//    dependencies {
+//        compile project(':common')
+//        compile("org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion")
+//        compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
+////        compile('org.flywaydb:flyway-core')
+//        runtime('org.springframework.boot:spring-boot-devtools')
+////        runtime('mysql:mysql-connector-java')
+//        compileOnly('org.projectlombok:lombok')
+//        testCompile('org.springframework.boot:spring-boot-starter-test')
+//    }
+//}

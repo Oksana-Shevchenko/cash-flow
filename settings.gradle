@@ -1,0 +1,3 @@
+rootProject.name = 'cash-flow'
+include ':web-api', ':common'
+
