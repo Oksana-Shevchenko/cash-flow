@@ -1,5 +1,6 @@
 package com.cash.cashflow.domain;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -7,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Data
+@Builder
 @Entity
 @Table(name = "bill")
 public class Bill extends BasicModel {

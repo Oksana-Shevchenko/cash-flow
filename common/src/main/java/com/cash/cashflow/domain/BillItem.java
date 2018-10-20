@@ -1,11 +1,17 @@
 package com.cash.cashflow.domain;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Data
+@Getter
+@Setter
+@Builder
 @Entity
 @Table(name = "bill_item")
 public class BillItem extends BasicModel {

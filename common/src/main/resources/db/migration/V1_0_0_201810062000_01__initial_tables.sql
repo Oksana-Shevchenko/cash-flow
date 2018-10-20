@@ -10,7 +10,7 @@ CREATE TABLE user (
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
-CREATE TABLE `group` (
+CREATE TABLE `groups` (
   id         VARCHAR(255) NOT NULL,
   version    INT          NOT NULL,
   created_on DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -27,7 +27,7 @@ CREATE TABLE user_group (
   KEY user_group_user_id_fk (user_id),
   CONSTRAINT user_group_user_id_fk FOREIGN KEY (user_id) REFERENCES user (id),
   KEY user_group_group_id_fk (group_id),
-  CONSTRAINT user_group_group_id_fk FOREIGN KEY (group_id) REFERENCES `group` (id)
+  CONSTRAINT user_group_group_id_fk FOREIGN KEY (group_id) REFERENCES `groups` (id)
 )
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
@@ -54,7 +54,7 @@ CREATE TABLE balance (
   KEY balance_user_id_fk (user_id),
   CONSTRAINT balance_user_id_fk FOREIGN KEY (user_id) REFERENCES user (id),
   KEY balance_group_id_fk (group_id),
-  CONSTRAINT balance_group_id_fk FOREIGN KEY (group_id) REFERENCES `group` (id),
+  CONSTRAINT balance_group_id_fk FOREIGN KEY (group_id) REFERENCES `groups` (id),
   KEY balance_currency_code_fk (currency_code),
   CONSTRAINT balance_currency_code_fk FOREIGN KEY (currency_code) REFERENCES currency (code)
 )
@@ -104,7 +104,7 @@ CREATE TABLE bill (
   KEY bill_currency_code_fk (currency_code),
   CONSTRAINT bill_currency_code_fk FOREIGN KEY (currency_code) REFERENCES currency (code),
   KEY bill_group_id_fk (group_id),
-  CONSTRAINT bill_group_id_fk FOREIGN KEY (group_id) REFERENCES `group` (id)
+  CONSTRAINT bill_group_id_fk FOREIGN KEY (group_id) REFERENCES `groups` (id)
 )
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
@@ -123,12 +123,12 @@ CREATE TABLE user_bill (
 CREATE TABLE bill_item (
   id          VARCHAR(255)   NOT NULL,
   version     INT            NOT NULL,
-  created_on  DATETIME DEFAULT CURRENT_TIMESTAMP,
-  updated_on  DATETIME DEFAULT CURRENT_TIMESTAMP,
+  created_on  DATETIME     DEFAULT CURRENT_TIMESTAMP,
+  updated_on  DATETIME     DEFAULT CURRENT_TIMESTAMP,
   title       VARCHAR(100)   NOT NULL,
   amount      DECIMAL(10, 2) NOT NULL,
   category_id VARCHAR(255)   NOT NULL,
-  bill_id     VARCHAR(255)   NOT NULL,
+  bill_id     VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY (id),
   KEY bill_item_category_id_fk (category_id),
   CONSTRAINT bill_item_category_id_fk FOREIGN KEY (category_id) REFERENCES category (id),
@@ -144,7 +144,7 @@ CREATE TABLE share (
   created_on DATETIME       DEFAULT CURRENT_TIMESTAMP,
   updated_on DATETIME       DEFAULT CURRENT_TIMESTAMP,
   user_id    VARCHAR(255) NOT NULL,
-  bill_id    VARCHAR(255) NOT NULL,
+  bill_id    VARCHAR(255)   DEFAULT NULL,
   amount     DECIMAL(10, 2) DEFAULT NULL,
   percent    DECIMAL(10, 2) DEFAULT NULL,
   share      DECIMAL(10, 2) DEFAULT NULL,
@@ -160,11 +160,11 @@ CREATE TABLE share (
 CREATE TABLE payer (
   id         VARCHAR(255)   NOT NULL,
   version    INT            NOT NULL,
-  created_on DATETIME DEFAULT CURRENT_TIMESTAMP,
-  updated_on DATETIME DEFAULT CURRENT_TIMESTAMP,
+  created_on DATETIME     DEFAULT CURRENT_TIMESTAMP,
+  updated_on DATETIME     DEFAULT CURRENT_TIMESTAMP,
   user_id    VARCHAR(255)   NOT NULL,
   amount     DECIMAL(10, 2) NOT NULL,
-  bill_id    VARCHAR(255)   NOT NULL,
+  bill_id    VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY (id),
   KEY payer_user_id_fk (user_id),
   CONSTRAINT payer_user_id_fk FOREIGN KEY (user_id) REFERENCES user (id),

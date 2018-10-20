@@ -1,11 +1,13 @@
 package com.cash.cashflow.domain;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Data
+@Builder
 @Entity
 @Table(name = "share")
 public class Share extends BasicModel {

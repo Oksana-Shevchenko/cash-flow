@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "group")
+@Table(name = "groups")
 public class Group extends BasicModel {
 	@Column(name = "name")
 	private String name;
