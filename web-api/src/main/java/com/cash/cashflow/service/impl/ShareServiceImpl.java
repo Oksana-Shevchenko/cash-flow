@@ -4,8 +4,8 @@ import com.cash.cashflow.domain.Bill;
 import com.cash.cashflow.domain.Share;
 import com.cash.cashflow.model.ShareRequest;
 import com.cash.cashflow.repository.ShareRepository;
-import com.cash.cashflow.repository.UserRepository;
 import com.cash.cashflow.service.ShareService;
+import com.cash.cashflow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -21,16 +21,18 @@ public class ShareServiceImpl implements ShareService {
 	private ShareRepository shareRepository;
 
 	@Autowired
-	private UserRepository userRepository;
+	private UserService userService;
 
 	@Override
 	public List<Share> createShares(List<ShareRequest> request, Bill bill) {
-		return request.stream().map(shareRequest -> this.createShare(shareRequest, bill)).collect(Collectors.toList());
+		List<Share> shares = request.stream().map(shareRequest -> this.createShare(shareRequest, bill)).collect(Collectors.toList());
+		bill.setShares(shares);
+		return shares;
 	}
 
 	private Share createShare(ShareRequest request, Bill bill) {
 		Share share = Share.builder()
-				.user(userRepository.findById(request.getUserId()).orElseThrow(() -> new RuntimeException("User Not Found")))
+				.user(userService.findUserById(request.getUserId()))
 				.bill(bill)
 				.amount(request.getAmount())
 				.percent(request.getPercent())

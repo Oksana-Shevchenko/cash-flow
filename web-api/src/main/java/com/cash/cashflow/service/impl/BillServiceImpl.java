@@ -1,22 +1,14 @@
 package com.cash.cashflow.service.impl;
 
 import com.cash.cashflow.domain.Bill;
-import com.cash.cashflow.domain.User;
 import com.cash.cashflow.model.BillRequest;
 import com.cash.cashflow.repository.BillRepository;
-import com.cash.cashflow.repository.CurrencyRepository;
-import com.cash.cashflow.repository.GroupRepository;
-import com.cash.cashflow.repository.UserRepository;
-import com.cash.cashflow.service.BillItemService;
-import com.cash.cashflow.service.BillService;
-import com.cash.cashflow.service.PayerService;
-import com.cash.cashflow.service.ShareService;
+import com.cash.cashflow.service.*;
+import com.cash.cashflow.validator.BillRequestValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
@@ -25,13 +17,13 @@ public class BillServiceImpl implements BillService {
 	private BillRepository billRepository;
 
 	@Autowired
-	private CurrencyRepository currencyRepository;
+	private CurrencyService currencyService;
 
 	@Autowired
-	private GroupRepository groupRepository;
+	private GroupService groupService;
 
 	@Autowired
-	private UserRepository userRepository;
+	private UserService userService;
 
 	@Autowired
 	private PayerService payerService;
@@ -42,20 +34,20 @@ public class BillServiceImpl implements BillService {
 	@Autowired
 	private ShareService shareService;
 
+	@Autowired
+	private BillRequestValidator billRequestValidator;
+
 	@Override
 	public Bill createBill(BillRequest request) {
-		List<User> participants = (List<User>) userRepository.findAllById(request.getParticipants());
 
-		if (participants.size() != request.getParticipants().size()) {
-			throw new RuntimeException("User not found");
-		}
+		billRequestValidator.validateBillRequest(request);
 
 		Bill bill = Bill.builder()
 				.description(request.getDescription())
 				.amount(request.getAmount())
-				.currency(currencyRepository.findById(request.getCurrencyCode()).orElseThrow(() -> new RuntimeException("Currency Not Found")))
-				.group(groupRepository.findById(request.getGroupId()).orElseThrow(() -> new RuntimeException("Currency Not Found")))
-				.participants(participants)
+				.currency(currencyService.findCurrencyById(request.getCurrencyCode()))
+				.group(groupService.findGroupById(request.getGroupId()))
+				.participants(userService.findAllUserById(request.getParticipants()))
 				.sharedType(request.getSharedType())
 				.build();
 

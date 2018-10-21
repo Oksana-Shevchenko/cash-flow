@@ -1,13 +1,14 @@
 package com.cash.cashflow.domain;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true)
 @Builder
 @Entity
 @Table(name = "bill")

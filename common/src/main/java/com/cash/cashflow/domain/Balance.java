@@ -1,11 +1,13 @@
 package com.cash.cashflow.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "balance")
 public class Balance extends BasicModel {

@@ -39,26 +39,26 @@ public class BillControllerSpec {
 	public void createShouldReturn200WhenRequestIsValid() {
 		PayerRequest payerRequest = PayerRequest
 				.builder()
-				.amount(BigDecimal.valueOf(50))
+				.amount(BigDecimal.valueOf(50.0))
 				.userId(EXISTING_USER_ID)
 				.build();
 
 		ShareRequest shareRequest = ShareRequest
 				.builder()
-				.amount(BigDecimal.valueOf(50))
+				.amount(BigDecimal.valueOf(50.0))
 				.share(BigDecimal.valueOf(1))
 				.userId(EXISTING_USER_ID)
 				.build();
 		BillItemRequest billItemRequest = BillItemRequest
 				.builder()
-				.amount(BigDecimal.valueOf(50))
+				.amount(BigDecimal.valueOf(50.0))
 				.categoryId(EXISTING_CATEGORY_ID)
 				.title("Player")
 				.build();
 		BillRequest billRequest = BillRequest
 				.builder()
 				.description("test")
-				.amount(BigDecimal.valueOf(50))
+				.amount(BigDecimal.valueOf(50.00))
 				.currencyCode("USD")
 				.groupId(EXISTING_GROUP_ID)
 				.participants(asSet(EXISTING_USER_ID))

@@ -1,7 +1,9 @@
 package com.cash.cashflow.controller;
 
+import com.cash.cashflow.domain.Bill;
+import com.cash.cashflow.domain.projection.BillProjection;
+import com.cash.cashflow.handler.ProjectionUtils;
 import com.cash.cashflow.model.BillRequest;
-import com.cash.cashflow.repository.GroupRepository;
 import com.cash.cashflow.service.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,18 +18,13 @@ public class BillController {
 
 	@Autowired
 	private BillService billService;
-
 	@Autowired
-	private GroupRepository repository;
+	private ProjectionUtils projectionUtils;
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<?> createBill(@RequestBody BillRequest request) {
-		return ResponseEntity.ok(billService.createBill(request));
+		final Bill bill = billService.createBill(request);
+		return ResponseEntity.ok(projectionUtils.toResource(bill, BillProjection.class));
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<?> getAllGroups() {
-		repository.findAll();
-		return ResponseEntity.ok("Success!!!");
-	}
 }

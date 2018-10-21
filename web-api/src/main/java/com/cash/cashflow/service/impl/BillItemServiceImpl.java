@@ -4,8 +4,8 @@ import com.cash.cashflow.domain.Bill;
 import com.cash.cashflow.domain.BillItem;
 import com.cash.cashflow.model.BillItemRequest;
 import com.cash.cashflow.repository.BillItemRepository;
-import com.cash.cashflow.repository.CategoryRepository;
 import com.cash.cashflow.service.BillItemService;
+import com.cash.cashflow.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -21,18 +21,22 @@ public class BillItemServiceImpl implements BillItemService {
 	private BillItemRepository billItemRepository;
 
 	@Autowired
-	private CategoryRepository categoryRepository;
+	private CategoryService categoryService;
 
 	@Override
 	public List<BillItem> createBillItems(List<BillItemRequest> request, Bill bill) {
-		return request.stream().map(createBillRequest -> this.createBillItem(createBillRequest, bill)).collect(Collectors.toList());
+		List<BillItem> items = request.stream()
+				.map(createBillRequest -> this.createBillItem(createBillRequest, bill))
+				.collect(Collectors.toList());
+		bill.setItems(items);
+		return items;
 	}
 
 	private BillItem createBillItem(BillItemRequest request, Bill bill) {
 		BillItem billItem = BillItem.builder()
 				.amount(request.getAmount())
 				.title(request.getTitle())
-				.category(categoryRepository.findById(request.getCategoryId()).orElseThrow(() -> new RuntimeException("Category not found")))
+				.category(categoryService.findCategoryById(request.getCategoryId()))
 				.bill(bill)
 				.build();
 		return billItemRepository.save(billItem);

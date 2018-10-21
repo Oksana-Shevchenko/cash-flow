@@ -1,11 +1,13 @@
 package com.cash.cashflow.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "user")
 public class User extends BasicModel {

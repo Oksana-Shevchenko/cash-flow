@@ -2,11 +2,13 @@ package com.cash.cashflow.domain;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Builder
 @Entity
 @Table(name = "payer")
