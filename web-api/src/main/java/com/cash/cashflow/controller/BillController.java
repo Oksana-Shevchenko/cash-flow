@@ -2,7 +2,7 @@ package com.cash.cashflow.controller;
 
 import com.cash.cashflow.domain.Bill;
 import com.cash.cashflow.domain.projection.BillProjection;
-import com.cash.cashflow.handler.ProjectionUtils;
+import com.cash.cashflow.util.ProjectionUtils;
 import com.cash.cashflow.model.BillRequest;
 import com.cash.cashflow.service.BillService;
 import org.springframework.beans.factory.annotation.Autowired;

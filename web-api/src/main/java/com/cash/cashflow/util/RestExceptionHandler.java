@@ -1,4 +1,4 @@
-package com.cash.cashflow.handler;
+package com.cash.cashflow.util;
 
 import com.cash.cashflow.exception.ApiException;
 import org.springframework.core.Ordered;

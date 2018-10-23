@@ -1,9 +1,11 @@
 package com.cash.cashflow.exception;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.http.HttpStatus;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class ApiException extends RuntimeException {
 	private HttpStatus status;
 	private String code;

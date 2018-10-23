@@ -15,5 +15,4 @@ public interface PayerProjection {
 
 	@Value("#{target.user.id}")
 	String getUserId();
-
 }
